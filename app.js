@@ -1,17 +1,38 @@
 var canvas = document.getElementById("snake");
 var ctx = canvas.getContext("2d");
+console.log(canvas)
 
-ctx.fillStyle = "red";
-ctx.fillRect(20,20,32,32);
+const grid = 32;
+//load img
+var g = document.getElementById("img");
+ctx.drawImage(g,0,0)
 
-ctx.fillRect(100,20,32,32);
+const beerImage = new Image();
+beerImage.src = "food.png"
 
-ctx.strokeStyle = "blue";
-ctx.lineWidth="5"
+let snake = [];
 
-ctx.strokeRect(100,20,32,32)
+snake[0] = {
+    x : 9 * grid,
+    y : 10 * grid
+}
 
-ctx.arc(200,200,50,0,Math.PI*2)
-ctx.fillStyle="yellow"
-ctx.fill()
-ctx.stroke()
+let beer = {
+    x : Math.floor(Math.random()*17+1) * grid,
+    y : Math.floor(Math.random()*15+1) * grid
+}
+
+function draw(){
+    ctx.drawImage(g,0,0)
+
+    for(let i = 0; i < snake.length ; i++){
+        ctx.fillStyle = ( i == 0 )? "red" : "black";
+        ctx.fillRect(snake[i].x,snake[i].y,grid,grid);
+        ctx.strokeStyle = "white";
+        ctx.strokeRect(snake[i].x,snake[i].y,grid,grid);
+    }
+
+    ctx.drawImage(beerImage,beer.x,beer.y);
+}
+
+var game = setInterval(draw,100);
