@@ -25,20 +25,26 @@ let beer = {
    let d;
   document.addEventListener("keydown",(e)=>{
     let k = e.keyCode
-    if(k==37){
-       d="left"
-    }
-    else if(k==38){
+    if( k == 37 && d !="right"){
+        d="left"
+      }else if(k == 38 && d != "down"){
         d="up"
-    }
-    else if(k==39){
+      }else if(k == 39 && d != "left"){
         d="right"
-    }
-    else if(k==40){
+      }else if(k == 40 && d != "up"){
         d="down"
-    }
+      }
     console.log(d)
 })
+
+function collision(head,array){
+    for(let i=0; i<array.length;i++){
+        if(head.x == array[i].x && head.y == array[i].y){
+            return true;
+        }
+    }
+    return false;
+}
 
 function draw(){
     ctx.drawImage(g,0,0)
@@ -82,6 +88,11 @@ function draw(){
         x : snakeX,
         y : snakeY
     }
+
+    if(snakeX < grid || snakeX > 17 * grid || snakeY < grid || snakeY > 15*grid || collision(newpos,snake)){
+        clearInterval(game);
+     }
+
     snake.unshift(newpos)
 }
 
